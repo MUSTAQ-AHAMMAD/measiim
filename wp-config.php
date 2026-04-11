@@ -2,32 +2,37 @@
 // Manual fix for WordPress REST API autoloader failure
 // Load in dependency order (parent classes first)
 
-// 1. Load the base REST Controller (root parent)
+// 1. Ensure the base HTTP response class exists before REST responses.
+if ( file_exists( __DIR__ . '/wp-includes/class-wp-http-response.php' ) ) {
+    require_once __DIR__ . '/wp-includes/class-wp-http-response.php';
+}
+
+// 2. Load the base REST Controller (root parent)
 if ( file_exists( __DIR__ . '/wp-includes/rest-api/class-wp-rest-controller.php' ) ) {
     require_once __DIR__ . '/wp-includes/rest-api/class-wp-rest-controller.php';
 }
 
-// 2. Load the base Revisions Controller (extends WP_REST_Controller)
+// 3. Load the base Revisions Controller (extends WP_REST_Controller)
 if ( file_exists( __DIR__ . '/wp-includes/rest-api/endpoints/class-wp-rest-revisions-controller.php' ) ) {
     require_once __DIR__ . '/wp-includes/rest-api/endpoints/class-wp-rest-revisions-controller.php';
 }
 
-// 3. Load other potentially missing classes
+// 4. Load other potentially missing classes
 if ( file_exists( __DIR__ . '/wp-includes/l10n/class-wp-translation-controller.php' ) ) {
     require_once __DIR__ . '/wp-includes/l10n/class-wp-translation-controller.php';
 }
 
-// 4. Also load WP_REST_Server which is commonly needed
+// 5. Also load WP_REST_Server which is commonly needed
 if ( file_exists( __DIR__ . '/wp-includes/rest-api/class-wp-rest-server.php' ) ) {
     require_once __DIR__ . '/wp-includes/rest-api/class-wp-rest-server.php';
 }
 
-// 5. Load WP_REST_Request
+// 6. Load WP_REST_Request
 if ( file_exists( __DIR__ . '/wp-includes/rest-api/class-wp-rest-request.php' ) ) {
     require_once __DIR__ . '/wp-includes/rest-api/class-wp-rest-request.php';
 }
 
-// 6. Load WP_REST_Response
+// 7. Load WP_REST_Response (requires WP_HTTP_Response above)
 if ( file_exists( __DIR__ . '/wp-includes/rest-api/class-wp-rest-response.php' ) ) {
     require_once __DIR__ . '/wp-includes/rest-api/class-wp-rest-response.php';
 }
