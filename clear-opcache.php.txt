@@ -1,0 +1,13 @@
+<?php
+if ( function_exists( 'opcache_reset' ) ) {
+    opcache_reset();
+    echo "OPcache cleared successfully.";
+} else {
+    echo "OPcache is not enabled.";
+}
+
+// Also clear WordPress object cache if it exists
+if ( file_exists( __DIR__ . '/wp-content/object-cache.php' ) ) {
+    unlink( __DIR__ . '/wp-content/object-cache.php' );
+    echo "Object cache file removed.";
+}
